@@ -78,7 +78,7 @@ def play(playButt = True):
         PlayButton.config(text = "Stop")
         PlayButton.config(command = stop)
         songTitle.config(text = songName)
-        pygame.mixer.music.play()
+        mixer.music.play()
     except Exception as ex:
         print(ex)
     conn.execute("UPDATE Seconds set second = 0")
@@ -189,7 +189,7 @@ def setVolume(num):
     volume = volumeScale.get()
     volume = volume/100
     try:
-        pygame.mixer.music.set_volume(volume)
+        mixer.music.set_volume(volume)
     except Exception as ex:
         print(ex)
 
