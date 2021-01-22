@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import filedialog
-import pygame
+from pygame import mixer
 from mutagen.mp3 import MP3
 import os
 import sqlite3
@@ -46,13 +46,13 @@ def play(playButt = True):
     if playButt == True:
         selectSong()
     playing = True
-    pygame.mixer.init()
+    mixer.init()
     try:
-        pygame.mixer.music.load(f"{direc}/{songName}")
+        mixer.music.load(f"{direc}/{songName}")
         PlayButton.config(text = "Stop")
         PlayButton.config(command = stop)
         songTitle.config(text = songName)
-        pygame.mixer.music.play()
+        mixer.music.play()
     except:
         pass
     conn.execute("UPDATE Seconds set second = 0")
@@ -65,14 +65,14 @@ def stop():
     global playing
     PlayButton.config(text = "Play")
     PlayButton.config(command = play)
-    pygame.mixer.music.stop()
+    mixer.music.stop()
     playing = False
 
 def pause():
     global playing
     PauseButton.config(text = "Unpause")
     PauseButton.config(command = unpause)
-    pygame.mixer.music.pause()
+    mixer.music.pause()
     playing = False
 
 def unpause():
@@ -80,7 +80,7 @@ def unpause():
     playing = True
     PauseButton.config(text = "Pause")
     PauseButton.config(command = pause)
-    pygame.mixer.music.unpause()
+    mixer.music.unpause()
 
 def MusicPos(num = 1000):
     num = int(num)
@@ -95,7 +95,7 @@ def MusicPos(num = 1000):
         song = MP3(f"{direc}/{songName}")
         songLen = round(song.info.length)
         mPos = round((num/100)*songLen)
-        pygame.mixer.music.set_pos(mPos)
+        mixer.music.set_pos(mPos)
         conn.execute(f"UPDATE Seconds set second = {mPos}")
         conn.commit()
 
@@ -143,7 +143,7 @@ def setVolume(num):
     volume = volumeScale.get()
     volume = volume/100
     try:
-        pygame.mixer.music.set_volume(volume)
+        mixer.music.set_volume(volume)
     except:
         pass
 
