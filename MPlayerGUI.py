@@ -1,6 +1,6 @@
 from tkinter import *
 from tkinter import filedialog
-import pygame
+from pygame import mixer
 from mutagen.mp3 import MP3
 import os
 import sqlite3
